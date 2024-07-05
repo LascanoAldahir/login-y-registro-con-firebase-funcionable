@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'secondscreen.dart';
 
+// Define un widget para manejar dinámicamente los cambios
 class FirstScreen extends StatefulWidget {
   @override
   _FirstScreenState createState() => _FirstScreenState();
 }
 
+// Se definen controladores para los campos de texto de usuario y contraseña.
+// Se definen las credenciales válidas.
 class _FirstScreenState extends State<FirstScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -13,11 +16,13 @@ class _FirstScreenState extends State<FirstScreen> {
   final String _validPassword = 'password123';
 
   void _login() {
-    if (_usernameController.text == _validUsername && _passwordController.text == _validPassword) {
+    if (_usernameController.text == _validUsername &&
+        _passwordController.text == _validPassword) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SecondScreen(data: 'Bienvenido $_validUsername'),
+          builder: (context) =>
+              SecondScreen(data: 'Bienvenido $_validUsername'),
         ),
       );
     } else {
@@ -57,14 +62,26 @@ class _FirstScreenState extends State<FirstScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              
+              // TextField para el usuario con el estilo estándar
               TextField(
                 controller: _usernameController,
-                decoration: InputDecoration(labelText: 'Usuario'),
+                decoration: InputDecoration(
+                  labelText: 'Usuario',
+                ),
               ),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Contraseña'),
-                obscureText: true,
+              SizedBox(height: 20),
+              // TextField para la contraseña con el estilo específico
+              SizedBox(
+                width: 250,
+                child: TextField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Contraseña',
+                  ),
+                  obscureText: true,
+                ),
               ),
               SizedBox(height: 20),
               ElevatedButton(

@@ -1,3 +1,6 @@
+flutter pub get
+<br>
+
 # flutter_application_1
 
 A new Flutter project.

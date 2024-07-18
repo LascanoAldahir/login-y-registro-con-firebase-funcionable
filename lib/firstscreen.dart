@@ -1,42 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'secondscreen.dart';
 
-// Define un widget para manejar dinámicamente los cambios
 class FirstScreen extends StatefulWidget {
   @override
   _FirstScreenState createState() => _FirstScreenState();
 }
 
-// Se definen controladores para los campos de texto de usuario y contraseña.
-// Se definen las credenciales válidas.
 class _FirstScreenState extends State<FirstScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final String _validUsername = 'user123';
-  final String _validPassword = 'password123';
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void _login() {
-    if (_usernameController.text == _validUsername &&
-        _passwordController.text == _validPassword) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              SecondScreen(data: 'Bienvenido $_validUsername'),
-        ),
+  void _register() async {
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: _usernameController.text,
+        password: _passwordController.text,
       );
-    } else {
-      _showErrorDialog();
+      _navigateToSecondScreen(userCredential.user?.email ?? 'Usuario');
+    } catch (e) {
+      _showErrorDialog(e.toString());
     }
   }
 
-  void _showErrorDialog() {
+  void _login() async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: _usernameController.text,
+        password: _passwordController.text,
+      );
+      _navigateToSecondScreen(userCredential.user?.email ?? 'Usuario');
+    } catch (e) {
+      _showErrorDialog(e.toString());
+    }
+  }
+
+  void _navigateToSecondScreen(String username) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SecondScreen(data: 'Bienvenido $username'),
+      ),
+    );
+  }
+
+  void _showErrorDialog(String message) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: Text('Error de autenticación'),
-          content: Text('Usuario o contraseña incorrectos.'),
+          content: Text(message),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -62,8 +77,6 @@ class _FirstScreenState extends State<FirstScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              
-              // TextField para el usuario con el estilo estándar
               TextField(
                 controller: _usernameController,
                 decoration: InputDecoration(
@@ -71,7 +84,6 @@ class _FirstScreenState extends State<FirstScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              // TextField para la contraseña con el estilo específico
               SizedBox(
                 width: 250,
                 child: TextField(
@@ -87,6 +99,11 @@ class _FirstScreenState extends State<FirstScreen> {
               ElevatedButton(
                 onPressed: _login,
                 child: Text('Iniciar Sesión'),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _register,
+                child: Text('Registrar'),
               ),
             ],
           ),

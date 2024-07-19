@@ -1,19 +1,5 @@
-flutter pub get
-<br>
+![image](https://github.com/user-attachments/assets/d087ee6c-74d1-4a66-9344-864750611a21)
+![image](https://github.com/user-attachments/assets/b4707306-4b65-4d63-8111-47d53cd2f55c)
+![image](https://github.com/user-attachments/assets/1ed060f0-47d3-45c7-a989-4a110144af45)
 
-# flutter_application_1
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

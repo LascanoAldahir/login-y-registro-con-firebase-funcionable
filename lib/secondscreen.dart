@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/mapscreen.dart';
 
-class SecondScreen extends StatelessWidget {
+class Secondpage extends StatelessWidget {
+
   final String data;
 
-  SecondScreen({required this.data});
+  const Secondpage({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Segunda Pantalla'),
+        title: const Text('Segunda Pantalla'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(data),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
-              child: Text('Volver a la Primera Pantalla'),
+              child: const Text('Mostrar Mapa'),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> const MapScreen()));
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              child: const Text('Volver a la Primera Pantalla'),
               onPressed: () {
                 Navigator.pop(context);
               },

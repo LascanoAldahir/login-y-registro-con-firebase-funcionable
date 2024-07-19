@@ -1,16 +1,66 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'secondscreen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/secondscreen.dart';
 
-class FirstScreen extends StatefulWidget {
+class Firstscreen extends StatefulWidget {
+  const Firstscreen({super.key});
+
   @override
-  _FirstScreenState createState() => _FirstScreenState();
+  State<Firstscreen> createState() => _FirstscreenState();
 }
 
-class _FirstScreenState extends State<FirstScreen> {
+class _FirstscreenState extends State<Firstscreen> {
+ 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextField(
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                  labelText: 'Usuario',
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 250,
+                child: TextField(
+                  controller: _passwordController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Contraseña',
+                  ),
+                  obscureText: true,
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _login,
+                child: const Text('Iniciar Sesión'),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _register,
+                child: const Text('Registrar'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   void _register() async {
     try {
@@ -40,7 +90,7 @@ class _FirstScreenState extends State<FirstScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SecondScreen(data: 'Bienvenido $username'),
+        builder: (context) => Secondpage(data: 'Bienvenido $username'),
       ),
     );
   }
@@ -50,14 +100,14 @@ class _FirstScreenState extends State<FirstScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Error de autenticación'),
+          title: const Text('Error de autenticación'),
           content: Text(message),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Aceptar'),
+              child: const Text('Aceptar'),
             ),
           ],
         );
@@ -65,50 +115,5 @@ class _FirstScreenState extends State<FirstScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                  labelText: 'Usuario',
-                ),
-              ),
-              SizedBox(height: 20),
-              SizedBox(
-                width: 250,
-                child: TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Contraseña',
-                  ),
-                  obscureText: true,
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _login,
-                child: Text('Iniciar Sesión'),
-              ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _register,
-                child: Text('Registrar'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  
 }
